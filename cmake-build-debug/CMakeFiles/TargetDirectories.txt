@@ -1,0 +1,3 @@
+/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms/cmake-build-debug/CMakeFiles/Assignment_4_Programming_Paradigms.dir
+/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms/cmake-build-debug/CMakeFiles/edit_cache.dir
+/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms/cmake-build-debug/CMakeFiles/rebuild_cache.dir
