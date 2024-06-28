@@ -271,6 +271,17 @@ void DynamicArray::FileEncryption(char* inputFile, char* outputFile, int key) {
     SaveInfo(outputFile);
 }
 
+void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
+    LoadInfo(inputFile);
+    CaesarCipher caesar;
+
+    for(size_t i = 0; i <= this->rows; i++) {
+        char* encryptedText = caesar.decrypt(this->data[i], key);
+    }
+
+    SaveInfo(outputFile);
+}
+
 void DynamicArray::Run()  {
     while(true) {
         cout << "Choose the command: " << endl;
@@ -395,20 +406,46 @@ void DynamicArray::Run()  {
                 break;
             }
             case 15: {
-                cout << "Enter the input file path: ";
-                char inputFile[256];
-                cin >> inputFile;
+                cout << "Choose type of operation(encrypt/decrypt): ";
+                string operation;
+                cin >> operation;
 
-                cout << "Enter the output file path: ";
+                char inputFile[256];
+
+                while(true) {
+                    cout << "Enter the input file path: ";
+                    cin >> inputFile;
+                    if(strstr(inputFile, ".txt") != nullptr) {
+                        break;
+                    }
+                    cout << "Invalid file name, try again with '.txt' "<< endl;;
+                }
+
                 char outputFile[256];
-                cin >> outputFile;
+
+                while(true) {
+                    cout << "Enter the output file path: ";
+                    cin >> outputFile;
+                    if(strstr(outputFile, ".txt") != nullptr) {
+                        break;
+                    }
+                    cout << "Invalid file name, try again with '.txt' "<< endl;;
+                }
 
                 cout << "Enter the key: ";
                 int key;
                 cin >> key;
 
-                FileEncryption(inputFile, outputFile, key);
-                cout << "Text has been encrypted successfully" << endl;
+                if(operation == "encrypt") {
+                    FileEncryption(inputFile, outputFile, key);
+                    cout << "Text has been encrypted successfully" << endl;
+                }
+
+                if(operation == "decrypt") {
+                    FileDecryption(inputFile, outputFile, key);
+                    cout << "Text has been decrypted successfully" << endl;
+                }
+
                 break;
             }
             default: {
