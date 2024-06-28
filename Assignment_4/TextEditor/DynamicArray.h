@@ -3,11 +3,11 @@
 
 class DynamicArray {
 private:
-    char **data;
+    char** data;
     size_t rows;
     size_t cols;
     size_t capacity;
-    char *buffer;
+    char* buffer;
 public:
     DynamicArray();
     DynamicArray(char** data, size_t rows, size_t cols, size_t capacity, char* buffer);
@@ -27,4 +27,6 @@ public:
     void InsertReplacement(int line, int index, char *newValue);
     void Print() const;
     void Run();
+    void FileEncryption(char* inputFile, char* outputFile, int key);
+    void FileDecryption(char* inputFile, char* outputFile, int key);
 };

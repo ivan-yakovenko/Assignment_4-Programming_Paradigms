@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include "DynamicArray.h"
+#include "../CaesarCipher/CaesarCipher.h"
 
 using namespace std;
 
@@ -59,6 +60,7 @@ void DynamicArray::PushBack(char *newValue) {
         this->data[this->rows][this->cols] = newValue[i];
         this->cols++;
     }
+    this->data[this->rows][this->cols] = '\0';
 }
 
 void DynamicArray::AddNewline() {
@@ -258,6 +260,17 @@ void DynamicArray::Print() const {
     }
 }
 
+void DynamicArray::FileEncryption(char* inputFile, char* outputFile, int key) {
+    LoadInfo(inputFile);
+    CaesarCipher caesar;
+
+    for(size_t i = 0; i <= this->rows; i++) {
+        char* encryptedText = caesar.encrypt(this->data[i], key);
+    }
+
+    SaveInfo(outputFile);
+}
+
 void DynamicArray::Run()  {
     while(true) {
         cout << "Choose the command: " << endl;
@@ -379,6 +392,23 @@ void DynamicArray::Run()  {
                 cin.getline(text, 256);
                 InsertReplacement(line, index, text);
                 delete[] text;
+                break;
+            }
+            case 15: {
+                cout << "Enter the input file path: ";
+                char inputFile[256];
+                cin >> inputFile;
+
+                cout << "Enter the output file path: ";
+                char outputFile[256];
+                cin >> outputFile;
+
+                cout << "Enter the key: ";
+                int key;
+                cin >> key;
+
+                FileEncryption(inputFile, outputFile, key);
+                cout << "Text has been encrypted successfully" << endl;
                 break;
             }
             default: {
