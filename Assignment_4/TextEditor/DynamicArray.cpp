@@ -270,8 +270,13 @@ void DynamicArray::FileEncryption(char* inputFile, char* outputFile, int key) {
 
     char element;
 
+    char chunk[128];
+
     while (fin.get(element)) {
         text = element;
+        if(strlen(text.getText()) >= sizeof(chunk)) {
+            delete[] text.getText();
+        }
         char* encryptedText = caesar.encrypt(text.getText(), key);
         fout << encryptedText;
     }
@@ -288,8 +293,13 @@ void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
 
     char element;
 
+    char chunk[128];
+
     while (fin.get(element)) {
         text = element;
+        if(strlen(text.getText()) >= sizeof(chunk)) {
+            delete[] text.getText();
+        }
         char* decryptedText = caesar.decrypt(text.getText(), key);
         fout << decryptedText;
     }
@@ -542,55 +552,3 @@ void DynamicArray::Run()  {
 
     }
 }
-
-
-
-
-//void DynamicArray::FileEncryption(char* inputFile, char* outputFile, int key) {
-//    LoadInfo(inputFile);
-//    CaesarCipher caesar;
-//
-//    char** newData = new char * [this->rows + 1];
-//
-//    for(size_t i = 0; i <= this->rows; i++) {
-//        char* encryptedText = caesar.encrypt(this->data[i], key);
-//        newData[i] = encryptedText;
-//    }
-//    for(size_t i = 0; i< this->rows; i++) {
-//        delete[] this->data[i];
-//    }
-//    delete[] this->data;
-//    this->data = newData;
-//    SaveInfo(outputFile);
-//}
-//
-//void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
-//    LoadInfo(inputFile);
-//    CaesarCipher caesar;
-//
-//    char** newData = new char * [this->rows + 1];
-//
-//    for (size_t i = 0; i <= this->rows; i++) {
-//        char *decryptedText = caesar.decrypt(this->data[i], key);
-//        newData[i] = decryptedText;
-//    }
-//    for(size_t i = 0; i< this->rows; i++) {
-//        delete[] this->data[i];
-//    }
-//    delete[] this->data;
-//    this->data = newData;
-//    SaveInfo(outputFile);
-//}
-
-
-//void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
-//    LoadInfo(inputFile);
-//    CaesarCipher caesar;
-//
-//    for (size_t i = 0; i <= this->rows; i++) {
-//        char *decryptedText = caesar.decrypt(this->data[i], key);
-//        this->data[i] = decryptedText;
-//    }
-//
-//    SaveInfo(outputFile);
-//}
