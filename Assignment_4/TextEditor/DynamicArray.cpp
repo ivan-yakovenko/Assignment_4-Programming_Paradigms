@@ -2,6 +2,7 @@
 #include <fstream>
 #include "DynamicArray.h"
 #include "../CaesarCipher/CaesarCipher.h"
+#include "../Text/Text.h"
 
 using namespace std;
 
@@ -144,6 +145,7 @@ void DynamicArray::LoadInfo(char *filename) {
             PushBack(str);
         }
     }
+    fin.close();
 }
 
 void DynamicArray::Delete(int line, int index, int symbols) {
@@ -261,25 +263,62 @@ void DynamicArray::Print() const {
 }
 
 void DynamicArray::FileEncryption(char* inputFile, char* outputFile, int key) {
-    LoadInfo(inputFile);
+    ifstream fin(inputFile);
+    ofstream fout(outputFile);
     CaesarCipher caesar;
+    Text text;
 
-    for(size_t i = 0; i <= this->rows; i++) {
-        char* encryptedText = caesar.encrypt(this->data[i], key);
+    char element;
+
+    while (fin.get(element)) {
+        text = element;
+        char* encryptedText = caesar.encrypt(text.getText(), key);
+        fout << encryptedText;
     }
 
-    SaveInfo(outputFile);
+    fin.close();
+    fout.close();
 }
 
 void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
-    LoadInfo(inputFile);
+    ifstream fin(inputFile);
+    ofstream fout(outputFile);
     CaesarCipher caesar;
+    Text text;
 
-    for(size_t i = 0; i <= this->rows; i++) {
-        char* encryptedText = caesar.decrypt(this->data[i], key);
+    char element;
+
+    while (fin.get(element)) {
+        text = element;
+        char* decryptedText = caesar.decrypt(text.getText(), key);
+        fout << decryptedText;
     }
 
-    SaveInfo(outputFile);
+    fin.close();
+    fout.close();
+}
+
+
+void DynamicArray::Encrypt(int key) {
+    CaesarCipher caesar;
+    for (size_t i = 0; i <= this->rows; i++) {
+        char *encryptedText = caesar.encrypt(this->data[i], key);
+        this->data[i] = encryptedText;
+    }
+}
+
+void DynamicArray::Decrypt(int key) {
+    CaesarCipher caesar;
+    for (size_t i = 0; i <= this->rows; i++) {
+        char *decryptedText = caesar.decrypt(this->data[i], key);
+        this->data[i] = decryptedText;
+    }
+}
+
+void DynamicArray::ClearInfo(char *filename) {
+    ofstream fout;
+    fout.open(filename, ofstream::trunc);
+    fout.close();
 }
 
 void DynamicArray::Run()  {
@@ -406,9 +445,15 @@ void DynamicArray::Run()  {
                 break;
             }
             case 15: {
-                cout << "Choose type of operation(encrypt/decrypt): ";
                 string operation;
-                cin >> operation;
+                while(true) {
+                    cout << "Choose type of operation(encrypt/decrypt): ";
+                    cin >> operation;
+                    if(operation == "encrypt" || operation == "decrypt") {
+                        break;
+                    }
+                    cout << "Invalid operation, try again "<< endl;;
+                }
 
                 char inputFile[256];
 
@@ -448,6 +493,47 @@ void DynamicArray::Run()  {
 
                 break;
             }
+            case 16: {
+                string operation;
+                while(true) {
+                    cout << "Choose type of operation(encrypt/decrypt): ";
+                    cin >> operation;
+                    if(operation == "encrypt" || operation == "decrypt") {
+                        break;
+                    }
+                    cout << "Invalid operation, try again "<< endl;;
+                }
+
+                cout << "Enter the key: ";
+                int key;
+                cin >> key;
+
+                if(operation == "encrypt") {
+                    Encrypt(key);
+                    cout << "Text has been encrypted successfully" << endl;
+                }
+
+                if(operation == "decrypt") {
+                    Decrypt(key);
+                    cout << "Text has been decrypted successfully" << endl;
+                }
+
+                break;
+            }
+            case 17: {
+                char filename[256];
+                while(true) {
+                    cout << "Enter the file name for clearing: " << endl;
+                    cin >> filename;
+                    if(strstr(filename, ".txt") != nullptr) {
+                        break;
+                    }
+                    cout << "Invalid file name, try again with '.txt' "<< endl;;
+                }
+                ClearInfo(filename);
+                cout << "Text has been cleared successfully" << endl;
+                break;
+            }
             default: {
                 cout << "Wrong command" << endl;
                 break;
@@ -456,3 +542,55 @@ void DynamicArray::Run()  {
 
     }
 }
+
+
+
+
+//void DynamicArray::FileEncryption(char* inputFile, char* outputFile, int key) {
+//    LoadInfo(inputFile);
+//    CaesarCipher caesar;
+//
+//    char** newData = new char * [this->rows + 1];
+//
+//    for(size_t i = 0; i <= this->rows; i++) {
+//        char* encryptedText = caesar.encrypt(this->data[i], key);
+//        newData[i] = encryptedText;
+//    }
+//    for(size_t i = 0; i< this->rows; i++) {
+//        delete[] this->data[i];
+//    }
+//    delete[] this->data;
+//    this->data = newData;
+//    SaveInfo(outputFile);
+//}
+//
+//void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
+//    LoadInfo(inputFile);
+//    CaesarCipher caesar;
+//
+//    char** newData = new char * [this->rows + 1];
+//
+//    for (size_t i = 0; i <= this->rows; i++) {
+//        char *decryptedText = caesar.decrypt(this->data[i], key);
+//        newData[i] = decryptedText;
+//    }
+//    for(size_t i = 0; i< this->rows; i++) {
+//        delete[] this->data[i];
+//    }
+//    delete[] this->data;
+//    this->data = newData;
+//    SaveInfo(outputFile);
+//}
+
+
+//void DynamicArray::FileDecryption(char* inputFile, char* outputFile, int key) {
+//    LoadInfo(inputFile);
+//    CaesarCipher caesar;
+//
+//    for (size_t i = 0; i <= this->rows; i++) {
+//        char *decryptedText = caesar.decrypt(this->data[i], key);
+//        this->data[i] = decryptedText;
+//    }
+//
+//    SaveInfo(outputFile);
+//}
