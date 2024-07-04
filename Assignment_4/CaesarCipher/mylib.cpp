@@ -3,6 +3,7 @@
 extern "C" {
     char* encrypt(char* rawText, int key) {
     for(int i = 0; i < strlen(rawText); i++) {
+        key = (key % 26 + 26) % 26;
         if(isupper(rawText[i])) {
             rawText[i] = char(int((rawText[i] - 'A' + key + 26) % 26 + 'A'));
         }
