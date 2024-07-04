@@ -29,4 +29,7 @@ public:
     void Run();
     void FileEncryption(char* inputFile, char* outputFile, int key);
     void FileDecryption(char* inputFile, char* outputFile, int key);
+    void Encrypt(int key);
+    void Decrypt(int key);
+    void ClearInfo(char* filename);
 };
