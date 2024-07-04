@@ -39,7 +39,7 @@
 				{
 					"directoryIndex" : 0,
 					"id" : "Assignment_4_Programming_Paradigms::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-Assignment_4_Programming_Paradigms-Debug-e1c223a6d14c25e1b72f.json",
+					"jsonFile" : "target-Assignment_4_Programming_Paradigms-Debug-ebd66b88136aeadd3750.json",
 					"name" : "Assignment_4_Programming_Paradigms",
 					"projectIndex" : 0
 				}
@@ -49,8 +49,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms/cmake-build-debug",
-		"source" : "/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms"
+		"build" : "/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms /cmake-build-debug",
+		"source" : "/Users/ivanyakovenko/CLionProjects/Assignment_4-Programming_Paradigms "
 	},
 	"version" : 
 	{
